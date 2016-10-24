@@ -1,0 +1,65 @@
+html(lang='en')
+  head
+    title Data Pengguna
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='../assets/css/bootstrap.min.css')
+    script(src='../assets/js/jquery-1.11.3.min.js')
+    script(src='../assets/js/bootstrap.min.js')
+    script(src='../assets/js/jquery.validate.min.js')
+    
+  body
+    .container
+      .panel.panel-danger
+        .panel-heading
+          h4.text-center Data Pengguna
+        .panel-body
+          form#myForm(action='/customers/submit', method='post')
+            .form-group
+              label(for='nama') Nama:
+              input#nama.form-control(type='text', name='nama', placeholder='Nama lengkap')
+            .form-group
+              label(for='email') Email:
+              input#email.form-control(type='email', name='email', placeholder='Email')
+            .form-group
+              label(for='phone') No. Telepon/Hp:
+              input#phone.form-control(type='text', name='phone', placeholder='Telepon/Hp')
+              input#promotag.form-control(type='hidden',name='promotag',value='#{promotag}')
+            .form-group
+              button.btn.btn-danger.center-block(type='submit') Submit
+              
+script(type="text/javascript").
+    var errorMessage = "Field can only contain letters, numbers, and hyphens.";
+    $.validator.addMethod("alphanumeric", function (value, element) {
+          return this.optional(element) || /^[a-z\d\-_\s]+$/i.test(value);
+    }, errorMessage);
+    $.validator.addMethod("noSpace2", function(value, element) {
+          return value.indexOf("  ") < 0 && value != "";
+    }, "No space please and don't leave it empty");
+    $('#myForm').validate({
+        rules: {           
+           email: {
+              required: true,
+              email: true
+           },
+           nama: {
+              required: true,
+              minlength: 3,
+              maxlength: 50,
+              alphanumeric: true,
+              noSpace2: true
+           },
+           phone: {
+              required: true,
+              number: true,
+              minlength: 5,
+              maxlength: 20
+           }
+        },
+        highlight: function(element) {
+           $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+        },
+        unhighlight: function(element) {
+           $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+        }
+     });

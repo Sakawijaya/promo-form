@@ -1,0 +1,34 @@
+html(lang='en')
+  head
+    title Data Pengguna
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='../assets/css/bootstrap.min.css')
+    script(src='../assets/js/jquery-1.11.3.min.js')
+    script(src='../assets/js/bootstrap.min.js')
+    script(src='../assets/js/jquery.validate.min.js')
+    script(src='../javascripts/datatables-1.10.12.min.js')
+    
+  body
+    .container
+    table#example.display(cellspacing='0', width='100%')
+  thead
+    tr
+      th promotag
+      th url
+      
+
+script(type='text/javascript').
+  $(document).ready(function() {
+  $('#example').DataTable( {
+  aoColumn:[
+  { sWidth: "50%", bSearchable: false, bSortable: false }, 
+  { sWidth: "50%", bSearchable: false, bSortable: false }, 
+  ],
+  serverSide: true,
+  ajax: {
+  url: '/ajax',
+  type: 'POST'
+  }
+  } );
+  } );
